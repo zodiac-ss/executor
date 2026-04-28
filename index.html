@@ -16,27 +16,24 @@ body {
 }
 
 /* canvases */
-#particles, #ripple {
+#particles {
     position: fixed;
     top: 0;
     left: 0;
     z-index: -3;
 }
 
-/* GLOBAL LIGHT FIELD */
+/* glow field */
 #glow {
     position: fixed;
     width: 140%;
     height: 140%;
     background: radial-gradient(circle at var(--x) var(--y),
-        rgba(0,140,255,0.22),
-        transparent 40%),
-        radial-gradient(circle at calc(var(--x) + 10%) calc(var(--y) + 10%),
-        rgba(180,0,255,0.18),
-        transparent 50%);
+        rgba(255,255,255,0.10),
+        transparent 45%);
     transform: translate(-15%, -15%);
     z-index: -2;
-    filter: blur(20px);
+    filter: blur(30px);
 }
 
 /* layout */
@@ -44,60 +41,58 @@ body {
     max-width: 950px;
     margin: auto;
     padding: 50px;
-    position: relative;
 }
 
-/* GLASS CORE */
+/* glass */
 .glass {
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.12);
-    backdrop-filter: blur(22px);
-    -webkit-backdrop-filter: blur(22px);
+    background: rgba(10,10,10,0.55);
+    border: 1px solid rgba(255,255,255,0.10);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
     border-radius: 20px;
-    transition: transform 0.1s ease, box-shadow 0.2s ease;
+    transition: transform 0.15s ease, box-shadow 0.2s ease;
 }
 
-/* HEADER */
+/* header */
 .header {
     text-align: center;
     padding: 70px 20px;
-    transform-style: preserve-3d;
 }
 
-/* floating logo */
 .logo {
-    width: 95px;
-    height: 95px;
+    width: 90px;
+    height: 90px;
     margin: auto;
-    margin-bottom: 18px;
+    margin-bottom: 15px;
     animation: float 5s ease-in-out infinite;
-    filter:
-        drop-shadow(0 0 25px rgba(0,150,255,0.7))
-        drop-shadow(0 0 50px rgba(180,0,255,0.4));
+    filter: drop-shadow(0 0 25px rgba(255,255,255,0.25));
 }
 
 .logo img {
     width: 100%;
-    border-radius: 20px;
+    border-radius: 18px;
 }
 
 @keyframes float {
     0% { transform: translateY(0px); }
-    50% { transform: translateY(-12px); }
+    50% { transform: translateY(-10px); }
     100% { transform: translateY(0px); }
 }
 
 /* text */
 h1 {
     font-size: 44px;
-    font-weight: 500;
+    font-weight: 400;
     text-transform: lowercase;
     margin: 0;
+    letter-spacing: 2px;
 }
 
-p { color: #aaa; }
+p {
+    color: rgba(255,255,255,0.55);
+}
 
-/* sections */
+/* section */
 .section {
     margin-top: 40px;
 }
@@ -107,25 +102,48 @@ p { color: #aaa; }
     padding: 22px;
     margin: 14px 0;
     border-radius: 20px;
-    position: relative;
+    transition: 0.2s;
     transform-style: preserve-3d;
-    transition: transform 0.15s ease, box-shadow 0.2s;
 }
 
-/* hover glow */
 .card:hover {
-    box-shadow: 0 0 35px rgba(255,255,255,0.08);
+    box-shadow: 0 0 30px rgba(255,255,255,0.08);
 }
 
-/* gradients */
-.blue { background: linear-gradient(135deg, rgba(0,140,255,0.25), rgba(255,255,255,0.05)); }
-.red { background: linear-gradient(135deg, rgba(255,60,60,0.25), rgba(255,255,255,0.05)); }
-.purple { background: linear-gradient(135deg, rgba(170,0,255,0.25), rgba(255,255,255,0.05)); }
+/* tiers */
+.blue {
+    background: linear-gradient(135deg, rgba(80,120,255,0.18), rgba(0,0,0,0.4));
+    border: 1px solid rgba(120,160,255,0.25);
+}
 
-.plan-title { font-size: 18px; font-weight: 500; }
-.price { font-weight: 600; margin-top: 4px; }
-.desc { color: #bbb; margin-top: 8px; font-size: 14px; }
+.red {
+    background: linear-gradient(135deg, rgba(255,80,80,0.18), rgba(0,0,0,0.4));
+    border: 1px solid rgba(255,120,120,0.25);
+}
 
+.purple {
+    background: linear-gradient(135deg, rgba(170,90,255,0.18), rgba(0,0,0,0.4));
+    border: 1px solid rgba(190,120,255,0.25);
+}
+
+/* text inside cards */
+.plan-title {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.price {
+    font-weight: 600;
+    margin-top: 4px;
+}
+
+.desc {
+    color: rgba(255,255,255,0.65);
+    margin-top: 8px;
+    font-size: 14px;
+}
+
+/* button */
 .button {
     display: inline-block;
     margin-top: 12px;
@@ -137,33 +155,32 @@ p { color: #aaa; }
     font-weight: 500;
 }
 
-/* CLICK RIPPLE */
-.ripple {
-    position: fixed;
-    border-radius: 50%;
-    transform: scale(0);
-    animation: rippleAnim 700ms ease-out;
-    background: rgba(255,255,255,0.25);
-    pointer-events: none;
-    z-index: 999;
-}
-
-@keyframes rippleAnim {
-    to {
-        transform: scale(6);
-        opacity: 0;
-    }
-}
-
 /* cursor glow */
 .cursor {
     position: fixed;
-    width: 280px;
-    height: 280px;
+    width: 260px;
+    height: 260px;
     background: radial-gradient(circle, rgba(255,255,255,0.08), transparent 60%);
     pointer-events: none;
     transform: translate(-50%, -50%);
     z-index: 1;
+}
+
+/* ripple */
+.ripple {
+    position: fixed;
+    border-radius: 50%;
+    transform: scale(0);
+    animation: ripple 700ms ease-out;
+    background: rgba(255,255,255,0.2);
+    pointer-events: none;
+}
+
+@keyframes ripple {
+    to {
+        transform: scale(6);
+        opacity: 0;
+    }
 }
 </style>
 </head>
@@ -172,21 +189,17 @@ p { color: #aaa; }
 
 <div id="glow"></div>
 <canvas id="particles"></canvas>
-<canvas id="ripple"></canvas>
 <div class="cursor" id="cursor"></div>
 
 <div class="container">
 
     <!-- HEADER -->
     <div class="header glass tilt">
-
         <div class="logo">
             <img src="zodiac.png">
         </div>
-
         <h1>zodiac serverside</h1>
-        <p>premium access system for supported roblox experiences</p>
-
+        <p>secure access system for verified users</p>
     </div>
 
     <!-- PLANS -->
@@ -195,21 +208,21 @@ p { color: #aaa; }
         <div class="card glass blue tilt">
             <div class="plan-title">basic plan</div>
             <div class="price">500 R$</div>
-            <div class="desc">core admin tools, standard access, and essential utilities for supported experiences.</div>
+            <div class="desc">core tools and standard access for supported experiences.</div>
             <a class="button" href="#">purchase</a>
         </div>
 
         <div class="card glass red tilt">
             <div class="plan-title">advanced plan</div>
             <div class="price">1000 R$</div>
-            <div class="desc">extended tools, faster execution, and upgraded utilities for enhanced control.</div>
+            <div class="desc">expanded utilities and improved execution performance.</div>
             <a class="button" href="#">purchase</a>
         </div>
 
         <div class="card glass purple tilt">
             <div class="plan-title">master plan</div>
             <div class="price">2000 R$</div>
-            <div class="desc">full premium access, priority performance, and exclusive high-tier features.</div>
+            <div class="desc">full feature access with priority system enhancements.</div>
             <a class="button" href="#">purchase</a>
         </div>
 
@@ -218,9 +231,7 @@ p { color: #aaa; }
 </div>
 
 <script>
-/* =======================
-   PARTICLES (repel system)
-======================= */
+/* ================= PARTICLES ================= */
 const canvas = document.getElementById("particles");
 const ctx = canvas.getContext("2d");
 
@@ -229,13 +240,13 @@ canvas.height = window.innerHeight;
 
 let particles = [];
 
-for (let i = 0; i < 140; i++) {
+for (let i = 0; i < 130; i++) {
     particles.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
         vx: 0,
         vy: 0,
-        r: Math.random() * 1.8
+        r: Math.random() * 1.6
     });
 }
 
@@ -255,16 +266,15 @@ document.addEventListener("mousemove", (e) => {
 
 /* click ripple */
 document.addEventListener("click", (e) => {
-    let ripple = document.createElement("div");
-    ripple.className = "ripple";
-    ripple.style.left = e.clientX + "px";
-    ripple.style.top = e.clientY + "px";
-    document.body.appendChild(ripple);
-
-    setTimeout(() => ripple.remove(), 700);
+    let r = document.createElement("div");
+    r.className = "ripple";
+    r.style.left = e.clientX + "px";
+    r.style.top = e.clientY + "px";
+    document.body.appendChild(r);
+    setTimeout(() => r.remove(), 700);
 });
 
-function animateParticles() {
+function animate() {
     ctx.clearRect(0,0,canvas.width,canvas.height);
 
     for (let p of particles) {
@@ -273,7 +283,7 @@ function animateParticles() {
         let dy = p.y - mouse.y;
         let dist = Math.sqrt(dx*dx + dy*dy);
 
-        if (dist < 130) {
+        if (dist < 120) {
             p.vx += dx * 0.01;
             p.vy += dy * 0.01;
         }
@@ -289,39 +299,29 @@ function animateParticles() {
         if (p.y < 0) p.y = canvas.height;
         if (p.y > canvas.height) p.y = 0;
 
-        ctx.fillStyle = "rgba(255,255,255,0.85)";
+        ctx.fillStyle = "rgba(255,255,255,0.7)";
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
         ctx.fill();
     }
 
-    requestAnimationFrame(animateParticles);
+    requestAnimationFrame(animate);
 }
-animateParticles();
+animate();
 
-/* resize */
-window.addEventListener("resize", () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-});
-
-/* =======================
-   3D TILT SYSTEM
-======================= */
+/* tilt system */
 document.querySelectorAll(".tilt").forEach(el => {
 
     el.addEventListener("mousemove", (e) => {
         let r = el.getBoundingClientRect();
-
         let x = (e.clientX - r.left) / r.width - 0.5;
         let y = (e.clientY - r.top) / r.height - 0.5;
 
-        el.style.transform = `
-            perspective(900px)
-            rotateX(${y * -10}deg)
-            rotateY(${x * 10}deg)
-            translateY(-2px)
-        `;
+        el.style.transform =
+        `perspective(900px)
+         rotateX(${y * -10}deg)
+         rotateY(${x * 10}deg)
+         translateY(-2px)`;
     });
 
     el.addEventListener("mouseleave", () => {
