@@ -16,6 +16,33 @@ body {
     overflow-x: hidden;
 }
 
+/* NAVBAR */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 15px;
+    z-index: 10;
+    backdrop-filter: blur(12px);
+    background: rgba(0,0,0,0.4);
+}
+
+.nav-btn {
+    padding: 8px 18px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.1);
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.nav-btn:hover {
+    background: white;
+    color: black;
+}
+
 /* canvases */
 #particles {
     position: fixed;
@@ -41,7 +68,15 @@ body {
 .container {
     max-width: 950px;
     margin: auto;
-    padding: 50px;
+    padding: 120px 50px 50px; /* space for navbar */
+}
+
+/* pages */
+.page {
+    display: none;
+}
+.page.active {
+    display: block;
 }
 
 /* glass */
@@ -188,58 +223,74 @@ p {
 
 <body>
 
+<!-- NAVBAR -->
+<div class="navbar">
+    <div class="nav-btn" onclick="showPage('home')">Home</div>
+    <div class="nav-btn" onclick="showPage('purchase')">Purchase</div>
+</div>
+
 <div id="glow"></div>
 <canvas id="particles"></canvas>
 <div class="cursor" id="cursor"></div>
 
 <div class="container">
 
-    <!-- HEADER -->
-    <div class="header glass tilt">
-        <div class="logo">
-            <img src="zodiac.png">
+    <!-- HOME -->
+    <div id="home" class="page active">
+        <div class="header glass tilt">
+            <div class="logo">
+                <img src="zodiac.png">
+            </div>
+            <h1>zodiac serverside</h1>
+            <p>secure access system for verified users</p>
         </div>
-        <h1>zodiac serverside</h1>
-        <p>secure access system for verified users</p>
     </div>
 
-    <!-- PLANS -->
-    <div class="section">
+    <!-- PURCHASE -->
+    <div id="purchase" class="page">
+        <div class="section">
 
-        <div class="card glass blue tilt">
-            <div class="plan-title">basic plan</div>
-            <div class="price">500 R$</div>
-            <div class="desc">• Access to core admin commands + limited require script access 
+            <div class="card glass blue tilt">
+                <div class="plan-title">basic plan</div>
+                <div class="price">500 R$</div>
+                <div class="desc">• Access to core admin commands + limited require script access 
 • Basic tools
 • Standard execution speed</div>
-            <a class="button" href="https://www.roblox.com/game-pass/1820078413/Basic">purchase</a>
-        </div>
+                <a class="button" href="https://www.roblox.com/game-pass/1820078413/Basic">purchase</a>
+            </div>
 
-        <div class="card glass red tilt">
-            <div class="plan-title">advanced plan</div>
-            <div class="price">1000 R$</div>
-            <div class="desc">• Everything in Basic
+            <div class="card glass red tilt">
+                <div class="plan-title">advanced plan</div>
+                <div class="price">1000 R$</div>
+                <div class="desc">• Everything in Basic
 • Extended require script library
 • Faster execution
 • Extra utility </div>
-            <a class="button" href="https://www.roblox.com/game-pass/1818519546/Advanced">purchase</a>
-        </div>
+                <a class="button" href="https://www.roblox.com/game-pass/1818519546/Advanced">purchase</a>
+            </div>
 
-        <div class="card glass purple tilt">
-            <div class="plan-title">master plan</div>
-            <div class="price">2000 R$</div>
-            <div class="desc">• Everything in Advanced
+            <div class="card glass purple tilt">
+                <div class="plan-title">master plan</div>
+                <div class="price">2000 R$</div>
+                <div class="desc">• Everything in Advanced
 • Full require script access + rare scripts
 • Priority support
 • Premium-only features</div>
-            <a class="button" href="https://www.roblox.com/game-pass/1814469621/Master">purchase</a>
-        </div>
+                <a class="button" href="https://www.roblox.com/game-pass/1814469621/Master">purchase</a>
+            </div>
 
+        </div>
     </div>
 
 </div>
 
 <script>
+/* PAGE SWITCH */
+function showPage(page) {
+    document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+    document.getElementById(page).classList.add("active");
+}
+
 /* ================= PARTICLES ================= */
 const canvas = document.getElementById("particles");
 const ctx = canvas.getContext("2d");
@@ -273,7 +324,7 @@ document.addEventListener("mousemove", (e) => {
     document.getElementById("cursor").style.top = e.clientY + "px";
 });
 
-/* click ripple */
+/* ripple */
 document.addEventListener("click", (e) => {
     let r = document.createElement("div");
     r.className = "ripple";
@@ -318,7 +369,7 @@ function animate() {
 }
 animate();
 
-/* tilt system */
+/* tilt */
 document.querySelectorAll(".tilt").forEach(el => {
 
     el.addEventListener("mousemove", (e) => {
