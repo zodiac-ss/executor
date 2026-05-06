@@ -40,24 +40,46 @@ body{
     min-height:100vh;
 }
 
-/* BACKGROUND GLOW */
+/* MOUSE REACTIVE BG */
+
+#bgGlow{
+    position:fixed;
+    inset:0;
+
+    background:
+    radial-gradient(
+        circle at var(--x) var(--y),
+        rgba(255,40,90,0.18),
+        transparent 25%
+    );
+
+    filter:blur(60px);
+
+    z-index:-4;
+
+    transition:
+    background-position 0.08s linear;
+}
+
+/* EXTRA AMBIENT */
 
 body::before{
     content:"";
+
     position:fixed;
     inset:0;
 
     background:
     radial-gradient(circle at 15% 20%,
-    rgba(255,30,70,0.22),
+    rgba(255,30,70,0.18),
     transparent 28%),
 
     radial-gradient(circle at 85% 20%,
-    rgba(255,0,120,0.14),
+    rgba(255,0,120,0.10),
     transparent 30%),
 
     radial-gradient(circle at 50% 80%,
-    rgba(255,0,70,0.12),
+    rgba(255,0,70,0.08),
     transparent 35%);
 
     filter:blur(90px);
@@ -70,7 +92,7 @@ body::before{
 #particles{
     position:fixed;
     inset:0;
-    z-index:-4;
+    z-index:-3;
 }
 
 /* NAVBAR */
@@ -173,6 +195,7 @@ body::before{
 
 .glass::before{
     content:"";
+
     position:absolute;
     inset:0;
 
@@ -192,113 +215,69 @@ body::before{
     display:flex;
     justify-content:center;
     align-items:center;
-    flex-direction:column;
 }
 
-/* LOGO FLOAT */
+/* FLIP CARD */
 
-.logo-wrapper{
-    width:170px;
-    height:170px;
-
-    margin-bottom:26px;
-
-    perspective:1200px;
-
-    cursor:pointer;
+.flip-wrapper{
+    width:100%;
+    perspective:1600px;
 }
 
-.logo-card{
+.flip-card{
     position:relative;
+
+    width:100%;
+    min-height:420px;
+
+    transform-style:preserve-3d;
+
+    transition:
+    transform 0.9s cubic-bezier(.2,.8,.2,1);
+}
+
+.flip-wrapper.flipped .flip-card{
+    transform:rotateY(180deg);
+}
+
+.face{
+    position:absolute;
+    inset:0;
 
     width:100%;
     height:100%;
 
-    transform-style:preserve-3d;
-
-    transition:transform 0.8s cubic-bezier(.2,.8,.2,1);
-}
-
-.logo-wrapper.flipped .logo-card{
-    transform:rotateY(180deg);
-}
-
-.logo-face{
-    position:absolute;
-    inset:0;
+    backface-visibility:hidden;
 
     border-radius:34px;
+}
 
-    backface-visibility:hidden;
+.back{
+    transform:rotateY(180deg);
 
     display:flex;
     align-items:center;
     justify-content:center;
 
-    overflow:hidden;
-}
-
-.logo-front{
-    background:
-    linear-gradient(
-        145deg,
-        rgba(255,255,255,0.10),
-        rgba(255,255,255,0.03)
-    );
-
-    animation:float 5s ease-in-out infinite;
-}
-
-.logo-front img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-
-    border-radius:34px;
-
-    filter:
-    drop-shadow(0 0 45px rgba(255,0,80,0.35))
-    drop-shadow(0 0 90px rgba(255,0,120,0.18));
-}
-
-.logo-back{
-    transform:rotateY(180deg);
-
-    padding:20px;
-
     text-align:center;
 
+    padding:40px;
+
+    font-size:26px;
+
+    color:rgba(255,255,255,0.75);
+
     background:
     linear-gradient(
         145deg,
-        rgba(255,40,90,0.18),
+        rgba(255,40,90,0.14),
         rgba(255,255,255,0.04)
     );
-
-    font-size:18px;
-    color:rgba(255,255,255,0.78);
-}
-
-@keyframes float{
-
-    0%{
-        transform:translateY(0px);
-    }
-
-    50%{
-        transform:translateY(-14px);
-    }
-
-    100%{
-        transform:translateY(0px);
-    }
 }
 
 /* HEADER */
 
 .header{
-    width:100%;
-
     border-radius:34px;
 
     padding:70px 40px;
@@ -308,6 +287,52 @@ body::before{
     transform-style:preserve-3d;
 
     cursor:pointer;
+}
+
+/* LOGO INSIDE HEADER */
+
+.logo{
+    width:160px;
+    height:160px;
+
+    margin:auto;
+    margin-bottom:28px;
+
+    border-radius:34px;
+
+    overflow:hidden;
+
+    transition:
+    transform 0.18s ease;
+}
+
+.logo img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+
+    border-radius:34px;
+
+    animation:float 5s ease-in-out infinite;
+
+    filter:
+    drop-shadow(0 0 45px rgba(255,0,80,0.35))
+    drop-shadow(0 0 90px rgba(255,0,120,0.18));
+}
+
+@keyframes float{
+
+    0%{
+        transform:translateY(0px);
+    }
+
+    50%{
+        transform:translateY(-12px);
+    }
+
+    100%{
+        transform:translateY(0px);
+    }
 }
 
 h1{
@@ -480,35 +505,14 @@ h1{
 
     transform:translate(-50%,-50%);
 
-    z-index:2;
-}
-
-/* RIPPLE */
-
-.ripple{
-    position:fixed;
-
-    border-radius:50%;
-
-    transform:scale(0);
-
-    animation:ripple 700ms ease-out;
-
-    background:rgba(255,255,255,0.18);
-
-    pointer-events:none;
-}
-
-@keyframes ripple{
-    to{
-        transform:scale(6);
-        opacity:0;
-    }
+    z-index:3;
 }
 </style>
 </head>
 
 <body>
+
+<div id="bgGlow"></div>
 
 <div class="navbar">
 
@@ -538,32 +542,38 @@ h1{
 
         <div class="hero">
 
-            <!-- FLOATING LOGO -->
+            <div class="flip-wrapper" id="flipWrapper">
 
-            <div class="logo-wrapper tilt" id="flipCard">
+                <div class="flip-card">
 
-                <div class="logo-card">
+                    <!-- FRONT -->
 
-                    <div class="logo-face logo-front glass">
-                        <img src="hexecutor.png">
+                    <div class="face front">
+
+                        <div class="header glass tilt" id="header">
+
+                            <div class="logo" id="logo">
+
+                                <img src="hexecutor.png">
+
+                            </div>
+
+                            <h1>hExecutor</h1>
+
+                            <div class="subtitle">
+                                premium execution environment with elevated access
+                            </div>
+
+                        </div>
+
                     </div>
 
-                    <div class="logo-face logo-back glass">
+                    <!-- BACK -->
+
+                    <div class="face back glass">
                         description goes here
                     </div>
 
-                </div>
-
-            </div>
-
-            <!-- HEADER -->
-
-            <div class="header glass tilt" id="headerFlip">
-
-                <h1>hExecutor</h1>
-
-                <div class="subtitle">
-                    premium execution environment with elevated access
                 </div>
 
             </div>
@@ -664,20 +674,23 @@ function showPage(page){
 
 /* FLIP */
 
-const flipCard = document.getElementById("flipCard");
-const headerFlip = document.getElementById("headerFlip");
+const flipWrapper =
+document.getElementById("flipWrapper");
 
-function flipLogo(){
-    flipCard.classList.toggle("flipped");
-}
+document.getElementById("header")
+.addEventListener("click",()=>{
 
-flipCard.addEventListener("click",flipLogo);
-headerFlip.addEventListener("click",flipLogo);
+    flipWrapper.classList.toggle("flipped");
+
+});
 
 /* PARTICLES */
 
-const canvas = document.getElementById("particles");
-const ctx = canvas.getContext("2d");
+const canvas =
+document.getElementById("particles");
+
+const ctx =
+canvas.getContext("2d");
 
 canvas.width = innerWidth;
 canvas.height = innerHeight;
@@ -700,9 +713,11 @@ for(let i=0;i<110;i++){
 
 }
 
+/* MOUSE */
+
 let mouse = {
-    x:0,
-    y:0
+    x:innerWidth/2,
+    y:innerHeight/2
 };
 
 document.addEventListener("mousemove",(e)=>{
@@ -710,30 +725,20 @@ document.addEventListener("mousemove",(e)=>{
     mouse.x = e.clientX;
     mouse.y = e.clientY;
 
-    document.getElementById("cursor").style.left =
-    e.clientX + "px";
+    document.documentElement.style
+    .setProperty("--x",e.clientX+"px");
 
-    document.getElementById("cursor").style.top =
-    e.clientY + "px";
+    document.documentElement.style
+    .setProperty("--y",e.clientY+"px");
 
+    document.getElementById("cursor")
+    .style.left = e.clientX + "px";
+
+    document.getElementById("cursor")
+    .style.top = e.clientY + "px";
 });
 
-/* RIPPLE */
-
-document.addEventListener("click",(e)=>{
-
-    let r = document.createElement("div");
-
-    r.className = "ripple";
-
-    r.style.left = e.clientX + "px";
-    r.style.top = e.clientY + "px";
-
-    document.body.appendChild(r);
-
-    setTimeout(()=>r.remove(),700);
-
-});
+/* ANIMATE */
 
 function animate(){
 
@@ -743,8 +748,25 @@ function animate(){
 
         let p = particles[i];
 
+        /* MOUSE REPEL */
+
+        let dxMouse = p.x - mouse.x;
+        let dyMouse = p.y - mouse.y;
+
+        let distMouse =
+        Math.sqrt(dxMouse*dxMouse + dyMouse*dyMouse);
+
+        if(distMouse < 140){
+
+            p.vx += dxMouse * 0.0008;
+            p.vy += dyMouse * 0.0008;
+        }
+
         p.x += p.vx;
         p.y += p.vy;
+
+        p.vx *= 0.99;
+        p.vy *= 0.99;
 
         if(p.x < 0 || p.x > canvas.width)
             p.vx *= -1;
@@ -752,14 +774,24 @@ function animate(){
         if(p.y < 0 || p.y > canvas.height)
             p.vy *= -1;
 
-        /* DRAW PARTICLE */
+        /* PARTICLE */
 
         ctx.beginPath();
-        ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-        ctx.fillStyle = "rgba(255,255,255,0.7)";
+
+        ctx.arc(
+            p.x,
+            p.y,
+            p.r,
+            0,
+            Math.PI*2
+        );
+
+        ctx.fillStyle =
+        "rgba(255,255,255,0.7)";
+
         ctx.fill();
 
-        /* CONNECT LINES */
+        /* CONNECT */
 
         for(let j=i+1;j<particles.length;j++){
 
@@ -768,7 +800,8 @@ function animate(){
             let dx = p.x - p2.x;
             let dy = p.y - p2.y;
 
-            let dist = Math.sqrt(dx*dx + dy*dy);
+            let dist =
+            Math.sqrt(dx*dx + dy*dy);
 
             if(dist < 110){
 
@@ -778,7 +811,9 @@ function animate(){
                 ctx.lineTo(p2.x,p2.y);
 
                 ctx.strokeStyle =
-                `rgba(255,255,255,${0.12 - dist/1000})`;
+                `rgba(255,255,255,${
+                    0.14 - dist/1000
+                })`;
 
                 ctx.lineWidth = 1;
 
@@ -794,7 +829,8 @@ animate();
 
 /* TILT */
 
-document.querySelectorAll(".tilt").forEach(el=>{
+document.querySelectorAll(".tilt")
+.forEach(el=>{
 
     el.addEventListener("mousemove",(e)=>{
 
@@ -808,7 +844,7 @@ document.querySelectorAll(".tilt").forEach(el=>{
 
         el.style.transform =
         `
-        perspective(1000px)
+        perspective(1200px)
         rotateX(${y * -10}deg)
         rotateY(${x * 10}deg)
         translateY(-2px)
@@ -819,12 +855,47 @@ document.querySelectorAll(".tilt").forEach(el=>{
 
         el.style.transform =
         `
-        perspective(1000px)
+        perspective(1200px)
         rotateX(0deg)
         rotateY(0deg)
         `;
     });
 
+});
+
+/* LOGO EXTRA TILT */
+
+const logo =
+document.getElementById("logo");
+
+logo.addEventListener("mousemove",(e)=>{
+
+    let r = logo.getBoundingClientRect();
+
+    let x =
+    (e.clientX - r.left) / r.width - 0.5;
+
+    let y =
+    (e.clientY - r.top) / r.height - 0.5;
+
+    logo.style.transform =
+    `
+    perspective(1000px)
+    rotateX(${y * -20}deg)
+    rotateY(${x * 20}deg)
+    scale(1.04)
+    `;
+});
+
+logo.addEventListener("mouseleave",()=>{
+
+    logo.style.transform =
+    `
+    perspective(1000px)
+    rotateX(0deg)
+    rotateY(0deg)
+    scale(1)
+    `;
 });
 </script>
 
