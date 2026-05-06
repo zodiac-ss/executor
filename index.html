@@ -15,19 +15,29 @@
     box-sizing:border-box;
 }
 
+html,
 body{
     margin:0;
+    padding:0;
+    overflow-x:hidden;
+}
+
+body{
     font-family:"Proxima Nova",sans-serif;
 
     background:
-    radial-gradient(circle at top left,
-    #8a0028 0%,
-    #420014 38%,
-    #120008 72%,
-    #050505 100%);
+    linear-gradient(
+        180deg,
+        #78001f 0%,
+        #3d0012 30%,
+        #130008 65%,
+        #050505 100%
+    );
+
+    background-attachment:fixed;
 
     color:white;
-    overflow-x:hidden;
+    min-height:100vh;
 }
 
 /* BACKGROUND GLOW */
@@ -38,19 +48,20 @@ body::before{
     inset:0;
 
     background:
-    radial-gradient(circle at 20% 20%,
-    rgba(255,20,60,0.22),
+    radial-gradient(circle at 15% 20%,
+    rgba(255,30,70,0.22),
     transparent 28%),
 
-    radial-gradient(circle at 80% 25%,
+    radial-gradient(circle at 85% 20%,
     rgba(255,0,120,0.14),
-    transparent 32%),
+    transparent 30%),
 
-    radial-gradient(circle at 50% 85%,
+    radial-gradient(circle at 50% 80%,
     rgba(255,0,70,0.12),
     transparent 35%);
 
-    filter:blur(80px);
+    filter:blur(90px);
+
     z-index:-5;
 }
 
@@ -66,15 +77,18 @@ body::before{
 
 .navbar{
     position:fixed;
+
     top:18px;
     left:50%;
+
     transform:translateX(-50%);
 
     display:flex;
     gap:14px;
+
     padding:10px;
 
-    z-index:20;
+    z-index:50;
 
     background:rgba(0,0,0,0.55);
 
@@ -92,7 +106,9 @@ body::before{
 
 .nav-btn{
     padding:10px 18px;
+
     border-radius:14px;
+
     cursor:pointer;
 
     transition:0.25s ease;
@@ -100,7 +116,6 @@ body::before{
     color:rgba(255,255,255,0.82);
 
     font-weight:600;
-    letter-spacing:0.2px;
 }
 
 .nav-btn:hover{
@@ -111,17 +126,15 @@ body::before{
         rgba(255,0,120,0.45)
     );
 
-    color:white;
-
     transform:translateY(-1px);
 }
 
 /* CONTAINER */
 
 .container{
-    width:min(1050px,92%);
+    width:min(1100px,92%);
     margin:auto;
-    padding-top:140px;
+    padding-top:150px;
 }
 
 /* PAGES */
@@ -134,7 +147,7 @@ body::before{
     display:block;
 }
 
-/* APPLE GLASS */
+/* GLASS */
 
 .glass{
     position:relative;
@@ -166,50 +179,114 @@ body::before{
     background:
     linear-gradient(
         135deg,
-        rgba(255,255,255,0.15),
-        transparent 40%
+        rgba(255,255,255,0.14),
+        transparent 45%
     );
 
     pointer-events:none;
 }
 
-/* HEADER */
+/* HERO */
 
-.header{
-    border-radius:34px;
-    padding:70px 40px;
-    text-align:center;
-    transform-style:preserve-3d;
+.hero{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
 }
 
-.logo{
-    width:320px;
-    height:320px;
+/* LOGO FLOAT */
 
-    margin:auto;
-    margin-bottom:22px;
+.logo-wrapper{
+    width:170px;
+    height:170px;
+
+    margin-bottom:26px;
+
+    perspective:1200px;
+
+    cursor:pointer;
+}
+
+.logo-card{
+    position:relative;
+
+    width:100%;
+    height:100%;
+
+    transform-style:preserve-3d;
+
+    transition:transform 0.8s cubic-bezier(.2,.8,.2,1);
+}
+
+.logo-wrapper.flipped .logo-card{
+    transform:rotateY(180deg);
+}
+
+.logo-face{
+    position:absolute;
+    inset:0;
+
+    border-radius:34px;
+
+    backface-visibility:hidden;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    overflow:hidden;
+}
+
+.logo-front{
+    background:
+    linear-gradient(
+        145deg,
+        rgba(255,255,255,0.10),
+        rgba(255,255,255,0.03)
+    );
 
     animation:float 5s ease-in-out infinite;
+}
+
+.logo-front img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+
+    border-radius:34px;
 
     filter:
     drop-shadow(0 0 45px rgba(255,0,80,0.35))
     drop-shadow(0 0 90px rgba(255,0,120,0.18));
 }
 
-.logo img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    border-radius:28px;
+.logo-back{
+    transform:rotateY(180deg);
+
+    padding:20px;
+
+    text-align:center;
+
+    background:
+    linear-gradient(
+        145deg,
+        rgba(255,40,90,0.18),
+        rgba(255,255,255,0.04)
+    );
+
+    font-size:18px;
+    color:rgba(255,255,255,0.78);
 }
 
 @keyframes float{
+
     0%{
         transform:translateY(0px);
     }
 
     50%{
-        transform:translateY(-12px);
+        transform:translateY(-14px);
     }
 
     100%{
@@ -217,20 +294,37 @@ body::before{
     }
 }
 
+/* HEADER */
+
+.header{
+    width:100%;
+
+    border-radius:34px;
+
+    padding:70px 40px;
+
+    text-align:center;
+
+    transform-style:preserve-3d;
+
+    cursor:pointer;
+}
+
 h1{
     margin:0;
 
-    font-size:72px;
+    font-size:74px;
+
+    letter-spacing:-4px;
     line-height:1;
 
-    letter-spacing:-3px;
-    font-weight:700;
+    font-weight:800;
 
     background:
     linear-gradient(
         180deg,
-        #ffffff 0%,
-        #ff9bbd 100%
+        #ffffff,
+        #ff9bbd
     );
 
     -webkit-background-clip:text;
@@ -238,7 +332,7 @@ h1{
 }
 
 .subtitle{
-    margin-top:16px;
+    margin-top:18px;
 
     color:rgba(255,255,255,0.72);
 
@@ -257,6 +351,7 @@ h1{
     border-radius:28px;
 
     padding:28px;
+
     margin-bottom:24px;
 
     transition:
@@ -300,7 +395,7 @@ h1{
     line-height:1.7;
 }
 
-/* BASIC PLAN */
+/* PLAN COLORS */
 
 .primary{
     background:
@@ -313,8 +408,6 @@ h1{
     border:1px solid rgba(120,170,255,0.18);
 }
 
-/* ADVANCED PLAN */
-
 .secondary{
     background:
     linear-gradient(
@@ -325,8 +418,6 @@ h1{
 
     border:1px solid rgba(255,120,120,0.16);
 }
-
-/* ELITE PLAN */
 
 .elite{
     background:
@@ -419,9 +510,8 @@ h1{
 
 <body>
 
-<!-- NAVBAR -->
-
 <div class="navbar">
+
     <div class="nav-btn" onclick="showPage('home')">
         Home
     </div>
@@ -434,9 +524,8 @@ h1{
     onclick="window.open('https://discord.gg/YOURINVITE','_blank')">
         Discord
     </div>
-</div>
 
-<!-- EFFECTS -->
+</div>
 
 <canvas id="particles"></canvas>
 <div class="cursor" id="cursor"></div>
@@ -447,16 +536,36 @@ h1{
 
     <div id="home" class="page active">
 
-        <div class="header glass tilt">
+        <div class="hero">
 
-            <div class="logo">
-                <img src="e.png">
+            <!-- FLOATING LOGO -->
+
+            <div class="logo-wrapper tilt" id="flipCard">
+
+                <div class="logo-card">
+
+                    <div class="logo-face logo-front glass">
+                        <img src="hexecutor.png">
+                    </div>
+
+                    <div class="logo-face logo-back glass">
+                        description goes here
+                    </div>
+
+                </div>
+
             </div>
 
-            <h1>hExecutor</h1>
+            <!-- HEADER -->
 
-            <div class="subtitle">
-                premium execution environment with elevated access
+            <div class="header glass tilt" id="headerFlip">
+
+                <h1>hExecutor</h1>
+
+                <div class="subtitle">
+                    premium execution environment with elevated access
+                </div>
+
             </div>
 
         </div>
@@ -468,8 +577,6 @@ h1{
     <div id="purchase" class="page">
 
         <div class="section">
-
-            <!-- BASIC -->
 
             <div class="card glass primary tilt">
 
@@ -493,8 +600,6 @@ h1{
 
             </div>
 
-            <!-- ADVANCED -->
-
             <div class="card glass secondary tilt">
 
                 <div class="plan-title">
@@ -516,8 +621,6 @@ h1{
                 </a>
 
             </div>
-
-            <!-- ELITE -->
 
             <div class="card glass elite tilt">
 
@@ -559,6 +662,18 @@ function showPage(page){
     .classList.add("active");
 }
 
+/* FLIP */
+
+const flipCard = document.getElementById("flipCard");
+const headerFlip = document.getElementById("headerFlip");
+
+function flipLogo(){
+    flipCard.classList.toggle("flipped");
+}
+
+flipCard.addEventListener("click",flipLogo);
+headerFlip.addEventListener("click",flipLogo);
+
 /* PARTICLES */
 
 const canvas = document.getElementById("particles");
@@ -569,17 +684,17 @@ canvas.height = innerHeight;
 
 let particles = [];
 
-for(let i=0;i<120;i++){
+for(let i=0;i<110;i++){
 
     particles.push({
 
         x:Math.random()*canvas.width,
         y:Math.random()*canvas.height,
 
-        vx:0,
-        vy:0,
+        vx:(Math.random()-0.5)*0.3,
+        vy:(Math.random()-0.5)*0.3,
 
-        r:Math.random()*1.8
+        r:Math.random()*2
 
     });
 
@@ -624,37 +739,52 @@ function animate(){
 
     ctx.clearRect(0,0,canvas.width,canvas.height);
 
-    for(let p of particles){
+    for(let i=0;i<particles.length;i++){
 
-        let dx = p.x - mouse.x;
-        let dy = p.y - mouse.y;
-
-        let dist = Math.sqrt(dx*dx + dy*dy);
-
-        if(dist < 120){
-
-            p.vx += dx * 0.01;
-            p.vy += dy * 0.01;
-
-        }
-
-        p.vx *= 0.92;
-        p.vy *= 0.92;
+        let p = particles[i];
 
         p.x += p.vx;
         p.y += p.vy;
 
-        if(p.x < 0) p.x = canvas.width;
-        if(p.x > canvas.width) p.x = 0;
+        if(p.x < 0 || p.x > canvas.width)
+            p.vx *= -1;
 
-        if(p.y < 0) p.y = canvas.height;
-        if(p.y > canvas.height) p.y = 0;
+        if(p.y < 0 || p.y > canvas.height)
+            p.vy *= -1;
 
-        ctx.fillStyle = "rgba(255,255,255,0.75)";
+        /* DRAW PARTICLE */
 
         ctx.beginPath();
         ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+        ctx.fillStyle = "rgba(255,255,255,0.7)";
         ctx.fill();
+
+        /* CONNECT LINES */
+
+        for(let j=i+1;j<particles.length;j++){
+
+            let p2 = particles[j];
+
+            let dx = p.x - p2.x;
+            let dy = p.y - p2.y;
+
+            let dist = Math.sqrt(dx*dx + dy*dy);
+
+            if(dist < 110){
+
+                ctx.beginPath();
+
+                ctx.moveTo(p.x,p.y);
+                ctx.lineTo(p2.x,p2.y);
+
+                ctx.strokeStyle =
+                `rgba(255,255,255,${0.12 - dist/1000})`;
+
+                ctx.lineWidth = 1;
+
+                ctx.stroke();
+            }
+        }
     }
 
     requestAnimationFrame(animate);
